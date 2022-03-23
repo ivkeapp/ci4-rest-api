@@ -1,5 +1,5 @@
 # CodeIgniter 4 RESTful API
-### RESTful API with dummy data to be consumed by fronted
+### RESTful API with dummy data to be consumed by frontend
 
 ### Instalation
 
