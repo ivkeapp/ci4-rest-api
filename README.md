@@ -1,3 +1,12 @@
+# CodeIgniter 4 RESTful API
+### RESTful API with dummy data to be consumed by fronted
+
+### Instalation
+
+- Connect app to a database
+- Run php spark migrate in terminal to load tables
+
+
 # CodeIgniter 4 Application Starter
 
 ## What is CodeIgniter?
