@@ -26,18 +26,25 @@ class User extends ResourceController
     // create
     public function create() {
         $model = new UserModel();
+        $error = array();
         $input = $this->request->getRawInput(); // getting raw input, apparently there is some bug in CI4 with getVar()
         $data = [
-            'username' => $input['username'],
+            'username'   => $input['username'],
             'first_name' => $input['first_name'],
-            'last_name' => $input['last_name'],
-            'phone' => $input['phone'],
-            'email' => $input['email'],
+            'last_name'  => $input['last_name'],
+            'phone'      => $input['phone'],
+            'email'      => $input['email'],
         ];
-        $model->insert($data);
+        if($model->insert($data)){
+            $error['isOk'] = true;
+            $error['errorMessage'] = 'No error.';
+        } else {
+            $error['isOk'] = false;
+            $error['errorMessage'] = 'User has not beed added.';
+        }
         $response = [
           'status'   => 201,
-          'error'    => null,
+          'error'    => $error,
           'messages' => [
               'success' => 'User has been created successfully.'
           ]
@@ -58,18 +65,25 @@ class User extends ResourceController
     public function update($id = null){
         $model = new UserModel();
         // $id = $this->request->getVar('user_id');
+        $error = array();
         $input = $this->request->getRawInput(); // getting raw input, apparently there is some bug in CI4 with getVar()
         $data = [
-            'username' => $input['username'],
+            'username'   => $input['username'],
             'first_name' => $input['first_name'],
-            'last_name' => $input['last_name'],
-            'phone' => $input['phone'],
-            'email' => $input['email'],
+            'last_name'  => $input['last_name'],
+            'phone'      => $input['phone'],
+            'email'      => $input['email'],
         ];
-        $model->update($id, $data);
+        if($model->insert($data)){
+            $error['isOk'] = true;
+            $error['errorMessage'] = 'No error.';
+        } else {
+            $error['isOk'] = false;
+            $error['errorMessage'] = 'User has not beed added.';
+        }
         $response = [
           'status'   => 200,
-          'error'    => null,
+          'error'    => $error,
           'messages' => [
               'user'    => $data,
               'success' => 'User has been updated successfully.'
