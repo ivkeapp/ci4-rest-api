@@ -46,6 +46,7 @@ class User extends ResourceController
           'status'   => 201,
           'error'    => $error,
           'messages' => [
+              'user' => $data,
               'success' => 'User has been created successfully.'
           ]
       ];
@@ -58,7 +59,7 @@ class User extends ResourceController
         if($data){
             return $this->respond($data);
         }else{
-            return $this->failNotFound('No user found.');
+            return $this->failNotFound('User is not found.');
         }
     }
     // update
@@ -94,19 +95,26 @@ class User extends ResourceController
     // delete
     public function delete($id = null){
         $model = new UserModel();
+        $error = array();
+        if(isset($id)){
+
+        }
         $data = $model->where('user_id', $id)->delete($id);
         if($data){
-            $model->delete($id);
-            $response = [
-                'status'   => 200,
-                'error'    => null,
-                'messages' => [
-                    'success' => 'User has been deleted successfully.'
-                ]
-            ];
-            return $this->respondDeleted($response);
-        }else{
-            return $this->failNotFound('No user found.');
+            $error['isOk'] = true;
+            $error['errorMessage'] = 'No error.';
+        } else {
+            $error['isOk'] = false;
+            $error['errorMessage'] = 'User has not been deleted.';
         }
+        $response = [
+            'status'   => 200,
+            'error'    => $error,
+            'messages' => [
+                'user'    => $id,
+                'success' => 'User has been deleted successfully.'
+            ]
+        ];
+        return $this->respondDeleted($response);
     }
 }
