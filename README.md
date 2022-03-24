@@ -4,7 +4,8 @@
 ### Instalation
 
 - Connect app to a database
-- Run php spark migrate in terminal to load tables
+- Run `php spark migrate` in terminal to load tables
+- Run `php spark db:seed CategoriesSeeder`, `php spark db:seed PostsSeeder`, `php spark db:seed UsersSeeder` in terminal to add data to database
 
 
 # CodeIgniter 4 Application Starter
