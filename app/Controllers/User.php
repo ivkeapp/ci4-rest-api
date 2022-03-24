@@ -26,13 +26,13 @@ class User extends ResourceController
     // create
     public function create() {
         $model = new UserModel();
-        $input = $this->getRequestInput($this->request);
+        $input = $this->request->getRawInput(); // getting raw input, apparently there is some bug in CI4 with getVar()
         $data = [
             'username' => $input['username'],
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
             'phone' => $input['phone'],
-            'email' => $input['email']
+            'email' => $input['email'],
         ];
         $model->insert($data);
         $response = [
@@ -57,20 +57,21 @@ class User extends ResourceController
     // update
     public function update($id = null){
         $model = new UserModel();
-        //$id = $this->request->getVar('user_id');
-        $input = $this->getRequestInput($this->request);
+        // $id = $this->request->getVar('user_id');
+        $input = $this->request->getRawInput(); // getting raw input, apparently there is some bug in CI4 with getVar()
         $data = [
             'username' => $input['username'],
             'first_name' => $input['first_name'],
             'last_name' => $input['last_name'],
             'phone' => $input['phone'],
-            'email' => $input['email']
+            'email' => $input['email'],
         ];
         $model->update($id, $data);
         $response = [
           'status'   => 200,
           'error'    => null,
           'messages' => [
+              'user'    => $data,
               'success' => 'User has been updated successfully.'
           ]
       ];
