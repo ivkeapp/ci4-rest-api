@@ -97,15 +97,17 @@ class User extends ResourceController
         $model = new UserModel();
         $error = array();
         if(isset($id)){
-
-        }
-        $data = $model->where('user_id', $id)->delete($id);
-        if($data){
-            $error['isOk'] = true;
-            $error['errorMessage'] = 'No error.';
+            $data = $model->where('user_id', $id)->delete($id);
+            if($data){
+                $error['isOk'] = true;
+                $error['errorMessage'] = 'No error.';
+            } else {
+                $error['isOk'] = false;
+                $error['errorMessage'] = 'User has not been deleted.';
+            }
         } else {
             $error['isOk'] = false;
-            $error['errorMessage'] = 'User has not been deleted.';
+            $error['errorMessage'] = 'Please provide user ID.';
         }
         $response = [
             'status'   => 200,

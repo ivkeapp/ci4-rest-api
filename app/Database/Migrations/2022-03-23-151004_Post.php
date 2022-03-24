@@ -23,17 +23,17 @@ class Post extends Migration
             ],
             'headtitle' => [
                 'type' => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '250',
                 'null' => false
             ],
             'body' => [
                 'type' => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '2500',
                 'null' => false
             ],
             'image_path' => [
                 'type' => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '250',
                 'null' => true
             ],
             'creator_id' => [
@@ -47,7 +47,7 @@ class Post extends Migration
         $this->forge->addForeignKey('category', 'categories', 'category_id');
         $this->forge->addForeignKey('creator_id', 'user', 'user_id');
         $this->forge->createTable('post');
-        
+
         $this->db->enableForeignKeyChecks(); // end of foreignkey check escape
     }
 
