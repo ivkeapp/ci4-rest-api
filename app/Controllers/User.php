@@ -75,7 +75,7 @@ class User extends ResourceController
             'phone'      => $input['phone'],
             'email'      => $input['email'],
         ];
-        if($model->insert($data)){
+        if($model->update($id, $data)){
             $error['isOk'] = true;
             $error['errorMessage'] = 'No error.';
         } else {

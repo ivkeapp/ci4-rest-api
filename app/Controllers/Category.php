@@ -54,9 +54,9 @@ class Category extends ResourceController
         $error = array();
         $input = $this->request->getRawInput(); // getting raw input, apparently there is some bug in CI4 with getVar()
         $data = [
-            'name'   => $input['name'],
+            'name'        => $input['name'],
         ];
-        if($model->insert($data)){
+        if($model->update($id, $data)){
             $error['isOk'] = true;
             $error['errorMessage'] = 'No error.';
         } else {

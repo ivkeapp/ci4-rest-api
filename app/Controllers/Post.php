@@ -58,14 +58,13 @@ class Post extends ResourceController
         $error = array();
         $input = $this->request->getRawInput(); // getting raw input, apparently there is some bug in CI4 with getVar()
         $data = [
-            'post_id'     => $id,
             'category'    => $input['category'],
             'headtitle'   => $input['headtitle'],
             'body'        => $input['body'],
             'image_path'  => $input['image_path'],
             'creator_id'  => $input['creator_id'],
         ];
-        if($model->insert($data)){
+        if($model->update($id, $data)){
             $error['isOk'] = true;
             $error['errorMessage'] = 'No error.';
         } else {
