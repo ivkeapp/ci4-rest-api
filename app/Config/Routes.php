@@ -33,6 +33,7 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->resource('user');
 $routes->resource('post');
+$routes->resource('category');
 
 /*
  * --------------------------------------------------------------------
