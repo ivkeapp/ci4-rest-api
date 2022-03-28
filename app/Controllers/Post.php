@@ -2,25 +2,15 @@
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\PostModel;
-use CodeIgniter\HTTP\IncomingRequest;
 
 class Post extends ResourceController
 {
 
-    public function getRequestInput(IncomingRequest $request){
-        $input = $request->getPost();
-        if (empty($input)) {
-            //convert request body to associative array
-            $input = json_decode($request->getBody(), true);
-        }
-        return $input;
-    }
-
     use ResponseTrait;
-    // all users
+    // all posts
     public function index(){
       $model = new PostModel();
-      $data['users'] = $model->orderBy('post_id', 'DESC')->findAll();
+      $data['posts'] = $model->orderBy('post_id', 'DESC')->findAll();
       return $this->respond($data);
     }
     // create
@@ -29,12 +19,11 @@ class Post extends ResourceController
         $error = array();
         $input = $this->request->getRawInput(); // getting raw input, apparently there is some bug in CI4 with getVar()
         $data = [
-            'category'   => $input['category'],
-            'headtitle' => $input['headtitle'],
-            'body'  => $input['body'],
-            'image_path'      => $input['image_path'],
-            'creator_id'      => $input['creator_id'],
-            'date_added'      => $input['date_added'],
+            'category'    => $input['category'],
+            'headtitle'   => $input['headtitle'],
+            'body'        => $input['body'],
+            'image_path'  => $input['image_path'],
+            'creator_id'  => $input['creator_id'],
         ];
         if($model->insert($data)){
             $error['isOk'] = true;
@@ -47,16 +36,16 @@ class Post extends ResourceController
           'status'   => 201,
           'error'    => $error,
           'messages' => [
-              'user' => $data,
+              'post' => $data,
               'success' => 'Post has been created successfully.'
           ]
       ];
       return $this->respondCreated($response);
     }
-    // single user
+    // single post
     public function show($id = null){
         $model = new PostModel();
-        $data = $model->where('user_id', $id)->first();
+        $data = $model->where('post_id', $id)->first();
         if($data){
             return $this->respond($data);
         }else{
@@ -66,15 +55,15 @@ class Post extends ResourceController
     // update
     public function update($id = null){
         $model = new PostModel();
-        // $id = $this->request->getVar('user_id');
         $error = array();
         $input = $this->request->getRawInput(); // getting raw input, apparently there is some bug in CI4 with getVar()
         $data = [
-            'category'   => $input['category'],
-            'headtitle' => $input['headtitle'],
-            'body'  => $input['body'],
-            'image_path'      => $input['image_path'],
-            'creator_id'      => $input['creator_id'],
+            'post_id'     => $id,
+            'category'    => $input['category'],
+            'headtitle'   => $input['headtitle'],
+            'body'        => $input['body'],
+            'image_path'  => $input['image_path'],
+            'creator_id'  => $input['creator_id'],
         ];
         if($model->insert($data)){
             $error['isOk'] = true;
@@ -87,7 +76,7 @@ class Post extends ResourceController
           'status'   => 200,
           'error'    => $error,
           'messages' => [
-              'user'    => $data,
+              'post'    => $data,
               'success' => 'Post has been updated successfully.'
           ]
       ];
@@ -98,7 +87,7 @@ class Post extends ResourceController
         $model = new PostModel();
         $error = array();
         if(isset($id)){
-            $data = $model->where('user_id', $id)->delete($id);
+            $data = $model->where('post', $id)->delete($id);
             if($data){
                 $error['isOk'] = true;
                 $error['errorMessage'] = 'No error.';
@@ -114,7 +103,7 @@ class Post extends ResourceController
             'status'   => 200,
             'error'    => $error,
             'messages' => [
-                'user'    => $id,
+                'post'    => $id,
                 'success' => 'Post has been deleted successfully.'
             ]
         ];
